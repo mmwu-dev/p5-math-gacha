@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Primary 5 Math: Multiplication of Fractions - Blind Box Gacha</title>
+    <title>Primary 5 Math: Multiplication of Fractions - Pokémon Poké Ball Gacha</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- KaTeX -->
@@ -65,9 +65,9 @@
     <header class="bg-white/90 backdrop-blur-md shadow-sm border-b border-slate-200 sticky top-0 z-40">
         <div class="max-w-5xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-3">
             <div class="flex items-center gap-2.5">
-                <span class="text-3xl">🎁</span>
+                <span class="text-3xl">🔴</span>
                 <div>
-                    <h1 class="text-lg sm:text-xl font-bold text-indigo-700 leading-tight">Magic Zoo Math Gacha</h1>
+                    <h1 class="text-lg sm:text-xl font-bold text-rose-600 leading-tight">Pokémon Math Gacha</h1>
                     <p class="text-xs text-slate-500 font-semibold">Primary 5 • Multiplication of Fractions</p>
                 </div>
             </div>
@@ -94,11 +94,11 @@
                 ✏️ Practice Arena
             </button>
             <button onclick="switchTab('gacha')" id="tab-gacha" class="tab-btn flex-1 py-2.5 text-sm sm:text-base font-bold border-b-4 border-transparent text-slate-500 hover:text-slate-700 transition relative">
-                🎁 Blind Box Shop
+                🔴 Poké Ball Shop
                 <span id="gacha-badge" class="hidden absolute top-1.5 right-4 w-2.5 h-2.5 bg-rose-500 rounded-full animate-ping"></span>
             </button>
             <button onclick="switchTab('album')" id="tab-album" class="tab-btn flex-1 py-2.5 text-sm sm:text-base font-bold border-b-4 border-transparent text-slate-500 hover:text-slate-700 transition">
-                📖 Zoo Album (<span id="album-count">0</span>/12)
+                📱 Pokédex (<span id="album-count">0</span>/12)
             </button>
         </div>
     </header>
@@ -109,7 +109,7 @@
         <!-- Student Name Banner -->
         <div class="mb-4 flex items-center justify-between bg-white px-4 py-2.5 rounded-2xl shadow-sm border border-slate-200">
             <div class="flex items-center gap-2 text-sm">
-                <span class="text-slate-500">Explorer:</span>
+                <span class="text-slate-500">Trainer:</span>
                 <input type="text" id="student-name-input" onchange="saveStudentName()" placeholder="Enter your name..." class="font-bold text-indigo-700 bg-indigo-50/60 px-2.5 py-1 rounded-lg border border-indigo-200 focus:outline-none focus:border-indigo-500 w-36 sm:w-48">
             </div>
             <div class="flex items-center gap-3 text-xs sm:text-sm font-bold">
@@ -168,28 +168,34 @@
 
         <!-- VIEW 2: BLIND BOX GACHA SHOP -->
         <section id="view-gacha" class="hidden space-y-6">
-            <div class="bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-500 rounded-3xl p-6 sm:p-8 text-white shadow-xl text-center relative overflow-hidden">
-                <h2 class="text-2xl sm:text-3xl font-bold mb-2">✨ Magic Zoo Blind Box Machine ✨</h2>
-                <p class="text-indigo-100 text-sm sm:text-base max-w-lg mx-auto">Solve fraction problems to earn Coins 🪙 and Gems 💎! Open mystery boxes to collect all 12 magical zoo companions.</p>
+            <div class="bg-gradient-to-br from-rose-600 via-red-500 to-amber-500 rounded-3xl p-6 sm:p-8 text-white shadow-xl text-center relative overflow-hidden">
+                <h2 class="text-2xl sm:text-3xl font-bold mb-2">⚡ Pokémon Poké Ball Blind Box Machine ⚡</h2>
+                <p class="text-indigo-100 text-sm sm:text-base max-w-lg mx-auto">Solve fraction problems to earn PokéCoins 🪙 and Master Gems 💎! Open mystery Poké Balls to catch all 12 Pokémon companions.</p>
 
                 <!-- Stage / Box Display -->
                 <div class="my-8 flex flex-col items-center justify-center min-h-[210px]">
-                    <div id="gacha-box-visual" class="text-8xl sm:text-9xl animate-float cursor-pointer select-none drop-shadow-2xl" onclick="pullGacha('standard')">
-                        🎁
+                    <div id="gacha-box-visual" class="w-32 h-32 sm:w-36 sm:h-36 animate-float cursor-pointer select-none drop-shadow-2xl flex items-center justify-center" onclick="pullGacha('standard')">
+                        <svg viewBox="0 0 100 100" class="w-full h-full">
+                            <circle cx="50" cy="50" r="46" fill="#ffffff" stroke="#1e293b" stroke-width="6"/>
+                            <path d="M 4 50 A 46 46 0 0 1 96 50 Z" fill="#ef4444" stroke="#1e293b" stroke-width="6"/>
+                            <line x1="4" y1="50" x2="96" y2="50" stroke="#1e293b" stroke-width="7"/>
+                            <circle cx="50" cy="50" r="14" fill="#ffffff" stroke="#1e293b" stroke-width="6"/>
+                            <circle cx="50" cy="50" r="6" fill="#e2e8f0"/>
+                        </svg>
                     </div>
-                    <p id="gacha-status-text" class="mt-4 text-sm font-bold bg-black/20 px-4 py-1.5 rounded-full">Choose a box below to unbox!</p>
+                    <p id="gacha-status-text" class="mt-4 text-sm font-bold bg-black/25 px-4 py-1.5 rounded-full">Choose a Poké Ball below to catch a Pokémon!</p>
                 </div>
 
                 <!-- Pull Buttons -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-xl mx-auto">
                     <button onclick="pullGacha('standard')" class="bg-amber-400 hover:bg-amber-300 text-amber-950 font-extrabold py-4 px-6 rounded-2xl shadow-lg transition transform hover:-translate-y-0.5 active:translate-y-0 flex flex-col items-center">
-                        <span class="text-lg">🎁 Standard Blind Box</span>
+                        <span class="text-lg">🔴 Standard Poké Ball</span>
                         <span class="text-xs font-bold bg-amber-500/30 px-3 py-0.5 rounded-full mt-1">Cost: 100 🪙 Coins</span>
                         <span class="text-[11px] opacity-80 mt-1">R: 65% • SR: 28% • SSR: 7%</span>
                     </button>
 
                     <button onclick="pullGacha('premium')" class="bg-gradient-to-r from-fuchsia-300 to-purple-200 hover:from-white hover:to-purple-100 text-purple-950 font-extrabold py-4 px-6 rounded-2xl shadow-lg transition transform hover:-translate-y-0.5 active:translate-y-0 flex flex-col items-center border-2 border-purple-200">
-                        <span class="text-lg">👑 Royal Rainbow Box</span>
+                        <span class="text-lg">🟣 Master Ball Blind Box</span>
                         <span class="text-xs font-bold bg-purple-500/20 px-3 py-0.5 rounded-full mt-1">Cost: 3 💎 Gems</span>
                         <span class="text-[11px] opacity-80 mt-1">Guaranteed SR or SSR! (SSR: 30%)</span>
                     </button>
@@ -202,11 +208,11 @@
             <div class="bg-white rounded-3xl p-6 shadow-md border border-slate-200">
                 <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
                     <div>
-                        <h2 class="text-2xl font-bold text-slate-800">📖 Magic Zoo Companion Album</h2>
-                        <p class="text-sm text-slate-500">Duplicate pulls automatically power up your companion's Star Level!</p>
+                        <h2 class="text-2xl font-bold text-slate-800">📱 Trainer Pokédex Collection</h2>
+                        <p class="text-sm text-slate-500">Catching duplicate Pokémon automatically powers up their Combat Star Level!</p>
                     </div>
                     <div class="bg-indigo-50 text-indigo-700 font-bold px-4 py-2 rounded-xl text-sm">
-                        Unlocked: <span id="album-progress-badge">0 / 12</span>
+                        Caught: <span id="album-progress-badge">0 / 12</span>
                     </div>
                 </div>
 
@@ -222,14 +228,14 @@
     <div id="reveal-modal" class="hidden fixed inset-0 bg-black/75 backdrop-blur-sm z-50 flex items-center justify-center p-4">
         <div id="reveal-card" class="bg-white rounded-3xl max-w-sm w-full p-6 text-center border-4 relative animate-pop">
             <span id="reveal-rarity-badge" class="inline-block px-4 py-1 rounded-full text-xs font-black tracking-wider uppercase mb-3">SSR</span>
-            <div id="reveal-emoji" class="text-8xl my-4 drop-shadow-md">🦄</div>
+            <div id="reveal-emoji" class="my-3 flex items-center justify-center h-32"></div>
             <h3 id="reveal-name" class="text-2xl font-extrabold text-slate-800">Starlight Unicorn</h3>
             <p id="reveal-desc" class="text-sm text-slate-500 mt-1 mb-4">A mystical guardian of fraction mastery!</p>
             <div id="reveal-star-status" class="bg-amber-50 border border-amber-200 text-amber-800 text-xs font-bold py-2 px-3 rounded-xl mb-5">
                 ✨ NEW COMPANION UNLOCKED! (★ Lv.1)
             </div>
             <button onclick="closeRevealModal()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 rounded-xl shadow-md transition">
-                Awesome! Collect 🎉
+                Gotcha! Keep in Pokédex ⚡
             </button>
         </div>
     </div>
@@ -269,7 +275,7 @@
                     </div>
                     <div class="bg-amber-50 p-3.5 rounded-2xl border border-amber-200">
                         <span class="text-xs text-amber-600 font-bold block">Assets & Pets</span>
-                        <span id="td-assets" class="text-sm font-extrabold text-amber-900">0 🪙 / 0 Pets</span>
+                        <span id="td-assets" class="text-sm font-extrabold text-amber-900">0 🪙 / 0 Pokémon</span>
                     </div>
                 </div>
 
@@ -433,26 +439,26 @@
             }
         ];
 
-        // --- 12 Magic Zoo Companions ---
+        // --- 12 Pokémon Companions (with Official Artwork & Fallback Badge) ---
         const companions = [
-            { id: 'c1', name: 'Bubbles the Bunny', rarity: 'R', emoji: '🐰', desc: 'Hops across fractions with speedy mental math.' },
-            { id: 'c2', name: 'Pip the Penguin', rarity: 'R', emoji: '🐧', desc: 'Slides smoothly over mixed numbers.' },
-            { id: 'c3', name: 'Mochi the Shiba', rarity: 'R', emoji: '🐕', desc: 'Loyal study buddy who loves simplifying fractions.' },
-            { id: 'c4', name: 'Clover the Frog', rarity: 'R', emoji: '🐸', desc: 'Leaps straight to the lowest terms!' },
-            { id: 'c5', name: 'Nutty the Squirrel', rarity: 'R', emoji: '🐿️', desc: 'Collects numerators and denominators like acorns.' },
-            { id: 'c6', name: 'Bamboo the Panda', rarity: 'R', emoji: '🐼', desc: 'Calmly cancels common factors with ease.' },
-            { id: 'c7', name: 'Sparky the Fox', rarity: 'SR', emoji: '🦊', desc: 'Clever strategist for multi-step fraction products.' },
-            { id: 'c8', name: 'Luna the Owl', rarity: 'SR', emoji: '🦉', desc: 'Wise night guardian of improper fractions.' },
-            { id: 'c9', name: 'Coral the Dolphin', rarity: 'SR', emoji: '🐬', desc: 'Dives deep into cross-cancellation tricks!' },
-            { id: 'c10', name: 'Leo the Star Lion', rarity: 'SR', emoji: '🦁', desc: 'Roars with pride on every combo streak!' },
-            { id: 'c11', name: 'Aurelia the Unicorn', rarity: 'SSR', emoji: '🦄', desc: 'Legendary rainbow keeper of Fraction Mastery!' },
-            { id: 'c12', name: 'Draco the Celest Dragon', rarity: 'SSR', emoji: '🐲', desc: 'Mythical sovereign of the Magic Math Zoo!' }
+            { id: 'p25', dex: '#025', name: 'Pikachu', type: 'Electric', rarity: 'R', sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png', fallback: '⚡', desc: 'Zaps through fraction multiplication with lightning speed!' },
+            { id: 'p1', dex: '#001', name: 'Bulbasaur', type: 'Grass', rarity: 'R', sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png', fallback: '🌱', desc: 'Steadily simplifies every fraction down to lowest terms.' },
+            { id: 'p4', dex: '#004', name: 'Charmander', type: 'Fire', rarity: 'R', sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/4.png', fallback: '🔥', desc: 'Burns away improper fractions with fiery focus!' },
+            { id: 'p7', dex: '#007', name: 'Squirtle', type: 'Water', rarity: 'R', sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/7.png', fallback: '💧', desc: 'Surfs smoothly across whole numbers and mixed fractions.' },
+            { id: 'p133', dex: '#133', name: 'Eevee', type: 'Normal', rarity: 'R', sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/133.png', fallback: '🦊', desc: 'Adapts effortlessly to any fraction cancellation trick.' },
+            { id: 'p39', dex: '#039', name: 'Jigglypuff', type: 'Fairy', rarity: 'R', sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/39.png', fallback: '🎤', desc: 'Sings a cheerful tune for every neat step-by-step solution!' },
+            { id: 'p94', dex: '#094', name: 'Gengar', type: 'Ghost', rarity: 'SR', sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/94.png', fallback: '👻', desc: 'Spots hidden common factors in the shadows!' },
+            { id: 'p143', dex: '#143', name: 'Snorlax', type: 'Normal', rarity: 'SR', sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/143.png', fallback: '😴', desc: 'Heavyweight champion of large mixed-number products!' },
+            { id: 'p448', dex: '#448', name: 'Lucario', type: 'Fighting', rarity: 'SR', sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/448.png', fallback: '🥋', desc: 'Senses the exact aura of the lowest-term answer!' },
+            { id: 'p6', dex: '#006', name: 'Charizard', type: 'Fire/Flying', rarity: 'SR', sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/6.png', fallback: '🐉', desc: 'Soars high on 3-question combo streaks!' },
+            { id: 'p150', dex: '#150', name: 'Mewtwo', type: 'Psychic', rarity: 'SSR', sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/150.png', fallback: '🔮', desc: 'Legendary Psychic master of multi-fraction equations!' },
+            { id: 'p384', dex: '#384', name: 'Rayquaza', type: 'Dragon/Flying', rarity: 'SSR', sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/384.png', fallback: '🐲', desc: 'Mythical Sky Dragon of Primary 5 Fraction Mastery!' }
         ];
 
         // --- Persistent State ---
-        const STORAGE_KEY = 'p5_fraction_gacha_v1';
+        const STORAGE_KEY = 'p5_fraction_pokemon_gacha_v2';
         let state = {
-            studentName: 'Math Explorer',
+            studentName: 'Ash Ketchum',
             coins: 100, // Starter gift so student can try 1 box or earn more!
             gems: 0,
             streak: 0,
@@ -547,7 +553,7 @@
 
         function saveStudentName() {
             const val = document.getElementById('student-name-input').value.trim();
-            state.studentName = val || 'Math Explorer';
+            state.studentName = val || 'Ash Ketchum';
             saveState();
         }
 
@@ -755,12 +761,12 @@
             const statusEl = document.getElementById('gacha-status-text');
             boxEl.classList.remove('animate-float');
             boxEl.classList.add('animate-shake');
-            statusEl.textContent = '✨ Unsealing the magic box... ✨';
+            statusEl.textContent = '🔴 Wobbling... 1... 2... 3... ✨';
 
             setTimeout(() => {
                 boxEl.classList.remove('animate-shake');
                 boxEl.classList.add('animate-float');
-                statusEl.textContent = 'Choose a box below to unbox!';
+                statusEl.textContent = 'Choose a Poké Ball below to catch a Pokémon!';
                 isPulling = false;
 
                 // Determine Rarity
@@ -809,14 +815,14 @@
                 badge.textContent = '⭐ R • RARE';
             }
 
-            emoji.textContent = pet.emoji;
+            emoji.innerHTML = `<img src="${pet.sprite}" alt="${pet.name}" class="w-32 h-32 object-contain mx-auto" onerror="this.outerHTML='<span class=\'text-7xl\'>${pet.fallback}</span>'">`;
             name.textContent = pet.name;
             desc.textContent = pet.desc;
 
             if (newLevel === 1) {
-                starStatus.textContent = '🎉 NEW COMPANION UNLOCKED! (★ Lv.1)';
+                starStatus.textContent = '🎉 GOTCHA! NEW POKÉMON REGISTERED! (★ Lv.1)';
             } else {
-                starStatus.textContent = `⬆️ LEVEL UP! Now ★ Lv.${newLevel} (${newLevel}x copies)`;
+                starStatus.textContent = `⬆️ POWER UP! Now ★ Lv.${newLevel} (Caught ${newLevel}x)`;
             }
 
             modal.classList.remove('hidden');
@@ -854,13 +860,19 @@
                 card.className = `rounded-2xl border-2 p-4 text-center flex flex-col items-center justify-between transition ${borderClass}`;
                 card.innerHTML = `
                     <div class="w-full flex justify-between items-center text-[11px] font-black">
-                        <span class="px-2 py-0.5 rounded-full ${tagClass}">${pet.rarity}</span>
-                        <span class="text-amber-600">${unlocked ? '★ Lv.' + count : '🔒 Locked'}</span>
+                        <span class="px-2 py-0.5 rounded-full ${tagClass}">${pet.rarity} • ${pet.dex}</span>
+                        <span class="text-amber-600">${unlocked ? '★ Lv.' + count : '🔒 Undiscovered'}</span>
                     </div>
-                    <div class="text-5xl my-3 ${unlocked ? '' : 'grayscale blur-[1px]'}">${unlocked ? pet.emoji : '❓'}</div>
+                    <div class="my-2 h-24 flex items-center justify-center">
+                        ${unlocked
+                            ? `<img src="${pet.sprite}" alt="${pet.name}" class="w-24 h-24 object-contain" onerror="this.outerHTML='<span class=\'text-5xl\'>${pet.fallback}</span>'">`
+                            : `<span class="text-5xl opacity-40">🔴</span>`
+                        }
+                    </div>
                     <div>
-                        <h4 class="font-extrabold text-sm text-slate-800">${unlocked ? pet.name : 'Mystery Pet'}</h4>
-                        <p class="text-[11px] text-slate-500 mt-1 line-clamp-2">${unlocked ? pet.desc : 'Open blind boxes to discover!'}</p>
+                        <h4 class="font-extrabold text-sm text-slate-800">${unlocked ? pet.name : '??? (' + pet.dex + ')'}</h4>
+                        <span class="inline-block text-[10px] font-bold text-slate-400">${unlocked ? pet.type + ' Type' : 'Unknown Type'}</span>
+                        <p class="text-[11px] text-slate-500 mt-1 line-clamp-2">${unlocked ? pet.desc : 'Open Poké Balls to catch this Pokémon!'}</p>
                     </div>
                 `;
                 grid.appendChild(card);
@@ -897,7 +909,7 @@
             const acc = state.totalAttempts > 0 ? Math.round((state.correctCount / state.totalAttempts) * 100) : 0;
             document.getElementById('td-accuracy').textContent = `${acc}%`;
             const petCount = Object.keys(state.collection).length;
-            document.getElementById('td-assets').textContent = `${state.coins} 🪙 / ${state.gems} 💎 / ${petCount} Pets`;
+            document.getElementById('td-assets').textContent = `${state.coins} 🪙 / ${state.gems} 💎 / ${petCount} Pokémon`;
 
             const tbody = document.getElementById('td-table-body');
             tbody.innerHTML = '';
