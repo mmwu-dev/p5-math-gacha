@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Primary 5 Math: Multiplication of Fractions - Blind Box Gacha</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- KaTeX -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet">
+    <!-- Tone.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
+    <style>
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+            background-color: #f0f4f8;
+            background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
+            background-size: 20px 20px;
+            user-select: none;
+        }
+        h1, h2, h3, .font-display {
+            font-family: 'Fredoka', sans-serif;
+        }
+        @keyframes shake {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            15% { transform: translate(-8px, -4px) rotate(-6deg); }
+            30% { transform: translate(8px, -2px) rotate(6deg); }
+            45% { transform: translate(-8px, 4px) rotate(-5deg); }
+            60% { transform: translate(8px, 2px) rotate(5deg); }
+            75% { transform: translate(-4px, -2px) rotate(-3deg); }
+            90% { transform: translate(4px, 2px) rotate(3deg); }
+        }
+        .animate-shake {
+            animation: shake 0.6s ease-in-out infinite;
+        }
+        @keyframes popIn {
+            0% { transform: scale(0.3); opacity: 0; }
+            70% { transform: scale(1.1); opacity: 1; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .animate-pop {
+            animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+        }
+        .animate-float {
+            animation: float 3s ease-in-out infinite;
+        }
+        .glow-R { box-shadow: 0 0 25px rgba(59, 130, 246, 0.6); border-color: #3b82f6; }
+        .glow-SR { box-shadow: 0 0 35px rgba(168, 85, 247, 0.8); border-color: #a855f7; }
+        .glow-SSR { box-shadow: 0 0 50px rgba(234, 179, 8, 0.95); border-color: #eab308; }
+        .katex { font-size: 1.25em !important; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col text-slate-800">
+
+    <!-- Top Navigation Bar -->
+    <header class="bg-white/90 backdrop-blur-md shadow-sm border-b border-slate-200 sticky top-0 z-40">
+        <div class="max-w-5xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-3">
+            <div class="flex items-center gap-2.5">
+                <span class="text-3xl">🎁</span>
+                <div>
+                    <h1 class="text-lg sm:text-xl font-bold text-indigo-700 leading-tight">Magic Zoo Math Gacha</h1>
+                    <p class="text-xs text-slate-500 font-semibold">Primary 5 • Multiplication of Fractions</p>
+                </div>
+            </div>
+
+            <!-- Player Currency & Stats -->
+            <div class="flex items-center gap-2 sm:gap-3">
+                <div class="flex items-center gap-1.5 bg-amber-100 border border-amber-300 px-3 py-1.5 rounded-full shadow-inner">
+                    <span class="text-lg">🪙</span>
+                    <span id="coin-display" class="font-bold text-amber-800 text-sm sm:text-base">0</span>
+                </div>
+                <div class="flex items-center gap-1.5 bg-purple-100 border border-purple-300 px-3 py-1.5 rounded-full shadow-inner" title="Earned from 3+ Combo Streaks!">
+                    <span class="text-lg">💎</span>
+                    <span id="gem-display" class="font-bold text-purple-800 text-sm sm:text-base">0</span>
+                </div>
+                <button onclick="openTeacherModal()" class="p-2 text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-full transition" title="Teacher Dashboard">
+                    ⚙️
+                </button>
+            </div>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <div class="max-w-5xl mx-auto px-4 flex gap-2 border-t border-slate-100 bg-slate-50/70">
+            <button onclick="switchTab('quiz')" id="tab-quiz" class="tab-btn flex-1 py-2.5 text-sm sm:text-base font-bold border-b-4 border-indigo-600 text-indigo-700 transition">
+                ✏️ Practice Arena
+            </button>
+            <button onclick="switchTab('gacha')" id="tab-gacha" class="tab-btn flex-1 py-2.5 text-sm sm:text-base font-bold border-b-4 border-transparent text-slate-500 hover:text-slate-700 transition relative">
+                🎁 Blind Box Shop
+                <span id="gacha-badge" class="hidden absolute top-1.5 right-4 w-2.5 h-2.5 bg-rose-500 rounded-full animate-ping"></span>
+            </button>
+            <button onclick="switchTab('album')" id="tab-album" class="tab-btn flex-1 py-2.5 text-sm sm:text-base font-bold border-b-4 border-transparent text-slate-500 hover:text-slate-700 transition">
+                📖 Zoo Album (<span id="album-count">0</span>/12)
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="flex-1 max-w-4xl w-full mx-auto p-4 sm:p-6">
+
+        <!-- Student Name Banner -->
+        <div class="mb-4 flex items-center justify-between bg-white px-4 py-2.5 rounded-2xl shadow-sm border border-slate-200">
+            <div class="flex items-center gap-2 text-sm">
+                <span class="text-slate-500">Explorer:</span>
+                <input type="text" id="student-name-input" onchange="saveStudentName()" placeholder="Enter your name..." class="font-bold text-indigo-700 bg-indigo-50/60 px-2.5 py-1 rounded-lg border border-indigo-200 focus:outline-none focus:border-indigo-500 w-36 sm:w-48">
+            </div>
+            <div class="flex items-center gap-3 text-xs sm:text-sm font-bold">
+                <span class="text-slate-500">Progress: <span id="progress-text" class="text-indigo-600">1 / 20</span></span>
+                <span id="streak-badge" class="hidden bg-orange-100 text-orange-600 border border-orange-300 px-2.5 py-0.5 rounded-full">🔥 <span id="streak-count">0</span> Streak!</span>
+            </div>
+        </div>
+
+        <!-- VIEW 1: QUIZ ARENA -->
+        <section id="view-quiz" class="space-y-5">
+            <!-- Progress Bar -->
+            <div class="w-full bg-slate-200 h-3 rounded-full overflow-hidden shadow-inner">
+                <div id="quiz-progress-bar" class="bg-gradient-to-r from-indigo-500 to-purple-500 h-full transition-all duration-500" style="width: 5%"></div>
+            </div>
+
+            <!-- Question Card -->
+            <div class="bg-white rounded-3xl shadow-lg border-2 border-indigo-100 p-6 sm:p-8 relative overflow-hidden">
+                <div class="flex items-center justify-between mb-4">
+                    <span id="q-number-badge" class="bg-indigo-100 text-indigo-700 font-bold text-xs sm:text-sm px-3 py-1 rounded-full">Question 1 of 20</span>
+                    <button onclick="speakCurrentQuestion()" class="flex items-center gap-1.5 bg-sky-100 hover:bg-sky-200 text-sky-700 font-bold text-xs sm:text-sm px-3 py-1.5 rounded-full transition cursor-pointer">
+                        <span>🔊</span> Read Aloud
+                    </button>
+                </div>
+
+                <!-- Question Text -->
+                <div class="my-6 text-center">
+                    <p class="text-slate-500 text-sm font-semibold mb-2">Calculate and give your answer in lowest terms:</p>
+                    <div id="question-display" class="text-2xl sm:text-4xl font-bold text-slate-800 py-4 px-2 bg-slate-50 rounded-2xl border border-slate-200/80 min-h-[90px] flex items-center justify-center">
+                        <!-- KaTeX rendered here -->
+                    </div>
+                </div>
+
+                <!-- Options Grid -->
+                <div id="options-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-3.5 mt-6">
+                    <!-- Buttons injected by JS -->
+                </div>
+
+                <!-- Feedback & Step-by-Step Solution Box -->
+                <div id="feedback-box" class="hidden mt-6 p-5 rounded-2xl border-2 transition-all">
+                    <div class="flex items-start justify-between gap-3">
+                        <div>
+                            <h3 id="feedback-title" class="text-lg font-bold mb-1"></h3>
+                            <p id="feedback-reward" class="text-sm font-semibold mb-3"></p>
+                        </div>
+                        <button onclick="nextQuestion()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-5 py-2.5 rounded-xl shadow-md transition transform active:scale-95 shrink-0">
+                            Next Question ➡️
+                        </button>
+                    </div>
+                    <div class="bg-white/80 p-3.5 rounded-xl border border-slate-200/80 text-sm">
+                        <span class="font-bold text-slate-600 block mb-1">📝 Step-by-Step Solution:</span>
+                        <div id="solution-display" class="text-slate-800 font-medium overflow-x-auto py-1"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- VIEW 2: BLIND BOX GACHA SHOP -->
+        <section id="view-gacha" class="hidden space-y-6">
+            <div class="bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-500 rounded-3xl p-6 sm:p-8 text-white shadow-xl text-center relative overflow-hidden">
+                <h2 class="text-2xl sm:text-3xl font-bold mb-2">✨ Magic Zoo Blind Box Machine ✨</h2>
+                <p class="text-indigo-100 text-sm sm:text-base max-w-lg mx-auto">Solve fraction problems to earn Coins 🪙 and Gems 💎! Open mystery boxes to collect all 12 magical zoo companions.</p>
+
+                <!-- Stage / Box Display -->
+                <div class="my-8 flex flex-col items-center justify-center min-h-[210px]">
+                    <div id="gacha-box-visual" class="text-8xl sm:text-9xl animate-float cursor-pointer select-none drop-shadow-2xl" onclick="pullGacha('standard')">
+                        🎁
+                    </div>
+                    <p id="gacha-status-text" class="mt-4 text-sm font-bold bg-black/20 px-4 py-1.5 rounded-full">Choose a box below to unbox!</p>
+                </div>
+
+                <!-- Pull Buttons -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-xl mx-auto">
+                    <button onclick="pullGacha('standard')" class="bg-amber-400 hover:bg-amber-300 text-amber-950 font-extrabold py-4 px-6 rounded-2xl shadow-lg transition transform hover:-translate-y-0.5 active:translate-y-0 flex flex-col items-center">
+                        <span class="text-lg">🎁 Standard Blind Box</span>
+                        <span class="text-xs font-bold bg-amber-500/30 px-3 py-0.5 rounded-full mt-1">Cost: 100 🪙 Coins</span>
+                        <span class="text-[11px] opacity-80 mt-1">R: 65% • SR: 28% • SSR: 7%</span>
+                    </button>
+
+                    <button onclick="pullGacha('premium')" class="bg-gradient-to-r from-fuchsia-300 to-purple-200 hover:from-white hover:to-purple-100 text-purple-950 font-extrabold py-4 px-6 rounded-2xl shadow-lg transition transform hover:-translate-y-0.5 active:translate-y-0 flex flex-col items-center border-2 border-purple-200">
+                        <span class="text-lg">👑 Royal Rainbow Box</span>
+                        <span class="text-xs font-bold bg-purple-500/20 px-3 py-0.5 rounded-full mt-1">Cost: 3 💎 Gems</span>
+                        <span class="text-[11px] opacity-80 mt-1">Guaranteed SR or SSR! (SSR: 30%)</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- VIEW 3: ZOO ALBUM COLLECTION -->
+        <section id="view-album" class="hidden space-y-5">
+            <div class="bg-white rounded-3xl p-6 shadow-md border border-slate-200">
+                <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+                    <div>
+                        <h2 class="text-2xl font-bold text-slate-800">📖 Magic Zoo Companion Album</h2>
+                        <p class="text-sm text-slate-500">Duplicate pulls automatically power up your companion's Star Level!</p>
+                    </div>
+                    <div class="bg-indigo-50 text-indigo-700 font-bold px-4 py-2 rounded-xl text-sm">
+                        Unlocked: <span id="album-progress-badge">0 / 12</span>
+                    </div>
+                </div>
+
+                <div id="album-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mt-4">
+                    <!-- Companion cards rendered via JS -->
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- GACHA REVEAL MODAL -->
+    <div id="reveal-modal" class="hidden fixed inset-0 bg-black/75 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div id="reveal-card" class="bg-white rounded-3xl max-w-sm w-full p-6 text-center border-4 relative animate-pop">
+            <span id="reveal-rarity-badge" class="inline-block px-4 py-1 rounded-full text-xs font-black tracking-wider uppercase mb-3">SSR</span>
+            <div id="reveal-emoji" class="text-8xl my-4 drop-shadow-md">🦄</div>
+            <h3 id="reveal-name" class="text-2xl font-extrabold text-slate-800">Starlight Unicorn</h3>
+            <p id="reveal-desc" class="text-sm text-slate-500 mt-1 mb-4">A mystical guardian of fraction mastery!</p>
+            <div id="reveal-star-status" class="bg-amber-50 border border-amber-200 text-amber-800 text-xs font-bold py-2 px-3 rounded-xl mb-5">
+                ✨ NEW COMPANION UNLOCKED! (★ Lv.1)
+            </div>
+            <button onclick="closeRevealModal()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 rounded-xl shadow-md transition">
+                Awesome! Collect 🎉
+            </button>
+        </div>
+    </div>
+
+    <!-- TEACHER DASHBOARD MODAL -->
+    <div id="teacher-modal" class="hidden fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-3xl w-full max-h-[90vh] flex flex-col shadow-2xl overflow-hidden">
+            <div class="px-6 py-4 bg-slate-800 text-white flex items-center justify-between">
+                <h2 class="text-lg font-bold flex items-center gap-2"><span>👩‍🏫</span> Teacher Dashboard & Analytics</h2>
+                <button onclick="closeTeacherModal()" class="text-slate-300 hover:text-white text-xl font-bold">✕</button>
+            </div>
+
+            <!-- Password Gate -->
+            <div id="teacher-login-box" class="p-8 text-center space-y-4">
+                <p class="text-slate-600 font-semibold">Enter Teacher PIN to view student records (Default: <code class="bg-slate-100 px-2 py-0.5 rounded">0000</code>)</p>
+                <input type="password" id="teacher-pin-input" maxlength="8" placeholder="••••" class="text-center text-2xl tracking-widest font-bold border-2 border-slate-300 focus:border-indigo-500 rounded-xl px-4 py-2 w-44 focus:outline-none">
+                <div>
+                    <button onclick="verifyTeacherPin()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-6 py-2.5 rounded-xl shadow transition">Unlock Dashboard</button>
+                </div>
+                <p id="teacher-pin-error" class="text-rose-500 text-sm font-bold hidden">Incorrect PIN. Try again!</p>
+            </div>
+
+            <!-- Dashboard Body -->
+            <div id="teacher-content-box" class="hidden p-6 overflow-y-auto space-y-6">
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                    <div class="bg-slate-50 p-3.5 rounded-2xl border border-slate-200">
+                        <span class="text-xs text-slate-500 font-bold block">Student</span>
+                        <span id="td-student" class="text-base font-extrabold text-slate-800">Guest</span>
+                    </div>
+                    <div class="bg-indigo-50 p-3.5 rounded-2xl border border-indigo-200">
+                        <span class="text-xs text-indigo-600 font-bold block">Total Attempts</span>
+                        <span id="td-attempts" class="text-xl font-extrabold text-indigo-900">0</span>
+                    </div>
+                    <div class="bg-emerald-50 p-3.5 rounded-2xl border border-emerald-200">
+                        <span class="text-xs text-emerald-600 font-bold block">Accuracy Rate</span>
+                        <span id="td-accuracy" class="text-xl font-extrabold text-emerald-900">0%</span>
+                    </div>
+                    <div class="bg-amber-50 p-3.5 rounded-2xl border border-amber-200">
+                        <span class="text-xs text-amber-600 font-bold block">Assets & Pets</span>
+                        <span id="td-assets" class="text-sm font-extrabold text-amber-900">0 🪙 / 0 Pets</span>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="font-bold text-slate-700 mb-2">Question-by-Question Performance</h3>
+                    <div class="border border-slate-200 rounded-xl overflow-hidden">
+                        <table class="w-full text-left text-sm">
+                            <thead class="bg-slate-100 text-slate-600 font-bold">
+                                <tr>
+                                    <th class="p-2.5">#</th>
+                                    <th class="p-2.5">Problem</th>
+                                    <th class="p-2.5">Answer</th>
+                                    <th class="p-2.5">Attempts</th>
+                                    <th class="p-2.5">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="td-table-body" class="divide-y divide-slate-100">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="flex flex-wrap justify-between items-center gap-3 pt-2 border-t border-slate-200">
+                    <button onclick="resetAllProgress()" class="bg-rose-100 hover:bg-rose-200 text-rose-700 font-bold text-xs px-4 py-2.5 rounded-xl transition">
+                        🗑️ Reset Student Progress
+                    </button>
+                    <button onclick="closeTeacherModal()" class="bg-slate-700 hover:bg-slate-800 text-white font-bold text-xs px-5 py-2.5 rounded-xl transition">
+                        Close Dashboard
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- Configuration ---
+        const GAS_URL = ""; // Leave empty by default; only set if user explicitly provides a Google Apps Script URL
+        const TEACHER_PIN = "0000";
+
+        // --- 20 Questions from Primary 5 Mathematics Worksheet: Multiplication of Fractions ---
+        const questions = [
+            {
+                q: "$\frac{3}{8} \times 24 = ?$",
+                ans: "$9$",
+                options: ["$9$", "$3$", "$12$", "$8$"],
+                step: "$\frac{3}{8} \times 24 = 3 \times 3 = 9$"
+            },
+            {
+                q: "$\frac{7}{12} \times 9 = ?$",
+                ans: "$5\frac{1}{4}$",
+                options: ["$5\frac{1}{4}$", "$4\frac{3}{4}$", "$6\frac{1}{4}$", "$\frac{21}{12}$"],
+                step: "$\frac{7}{12} \times 9 = \frac{7 \times 3}{4} = \frac{21}{4} = 5\frac{1}{4}$"
+            },
+            {
+                q: "$2\frac{2}{7} \times 5 = ?$",
+                ans: "$11\frac{3}{7}$",
+                options: ["$11\frac{3}{7}$", "$10\frac{2}{7}$", "$10\frac{3}{7}$", "$12\frac{1}{7}$"],
+                step: "$2\frac{2}{7} \times 5 = \frac{16}{7} \times 5 = \frac{80}{7} = 11\frac{3}{7}$"
+            },
+            {
+                q: "$28 \times 3\frac{3}{4} = ?$",
+                ans: "$105$",
+                options: ["$105$", "$84$", "$95$", "$112$"],
+                step: "$28 \times 3\frac{3}{4} = 28 \times \frac{15}{4} = 7 \times 15 = 105$"
+            },
+            {
+                q: "$4\frac{1}{8} \times 6 = ?$",
+                ans: "$24\frac{3}{4}$",
+                options: ["$24\frac{3}{4}$", "$24\frac{1}{8}$", "$25\frac{1}{4}$", "$22\frac{3}{4}$"],
+                step: "$4\frac{1}{8} \times 6 = \frac{33}{8} \times 6 = \frac{33 \times 3}{4} = \frac{99}{4} = 24\frac{3}{4}$"
+            },
+            {
+                q: "$8 \times 2\frac{5}{6} = ?$",
+                ans: "$22\frac{2}{3}$",
+                options: ["$22\frac{2}{3}$", "$16\frac{5}{6}$", "$21\frac{1}{3}$", "$23\frac{1}{3}$"],
+                step: "$8 \times 2\frac{5}{6} = 8 \times \frac{17}{6} = \frac{4 \times 17}{3} = \frac{68}{3} = 22\frac{2}{3}$"
+            },
+            {
+                q: "$3\frac{3}{5} \times 4 = ?$",
+                ans: "$14\frac{2}{5}$",
+                options: ["$14\frac{2}{5}$", "$12\frac{3}{5}$", "$13\frac{4}{5}$", "$15\frac{1}{5}$"],
+                step: "$3\frac{3}{5} \times 4 = \frac{18}{5} \times 4 = \frac{72}{5} = 14\frac{2}{5}$"
+            },
+            {
+                q: "$9 \times 4\frac{2}{3} = ?$",
+                ans: "$42$",
+                options: ["$42$", "$36$", "$38$", "$44$"],
+                step: "$9 \times 4\frac{2}{3} = 9 \times \frac{14}{3} = 3 \times 14 = 42$"
+            },
+            {
+                q: "$\frac{3}{5} \times \frac{1}{3} = ?$",
+                ans: "$\frac{1}{5}$",
+                options: ["$\frac{1}{5}$", "$\frac{3}{15}$", "$\frac{4}{8}$", "$\frac{3}{5}$"],
+                step: "$\frac{3}{5} \times \frac{1}{3} = \frac{1}{5} \times 1 = \frac{1}{5}$"
+            },
+            {
+                q: "$\frac{4}{9} \times \frac{3}{8} = ?$",
+                ans: "$\frac{1}{6}$",
+                options: ["$\frac{1}{6}$", "$\frac{1}{3}$", "$\frac{7}{17}$", "$\frac{12}{72}$"],
+                step: "$\frac{4}{9} \times \frac{3}{8} = \frac{1}{3} \times \frac{1}{2} = \frac{1}{6}$"
+            },
+            {
+                q: "$2\frac{2}{5} \times \frac{4}{9} = ?$",
+                ans: "$1\frac{1}{15}$",
+                options: ["$1\frac{1}{15}$", "$2\frac{8}{45}$", "$1\frac{2}{15}$", "$\frac{16}{45}$"],
+                step: "$2\frac{2}{5} \times \frac{4}{9} = \frac{12}{5} \times \frac{4}{9} = \frac{4 \times 4}{5 \times 3} = \frac{16}{15} = 1\frac{1}{15}$"
+            },
+            {
+                q: "$\frac{5}{7} \times 3\frac{1}{2} = ?$",
+                ans: "$2\frac{1}{2}$",
+                options: ["$2\frac{1}{2}$", "$3\frac{5}{14}$", "$2\frac{1}{7}$", "$1\frac{1}{2}$"],
+                step: "$\frac{5}{7} \times 3\frac{1}{2} = \frac{5}{7} \times \frac{7}{2} = \frac{5}{2} = 2\frac{1}{2}$"
+            },
+            {
+                q: "$4\frac{1}{3} \times \frac{6}{13} = ?$",
+                ans: "$2$",
+                options: ["$2$", "$4\frac{2}{13}$", "$1\frac{1}{2}$", "$3$"],
+                step: "$4\frac{1}{3} \times \frac{6}{13} = \frac{13}{3} \times \frac{6}{13} = 1 \times 2 = 2$"
+            },
+            {
+                q: "$2\frac{1}{6} \times 1\frac{3}{5} = ?$",
+                ans: "$3\frac{7}{15}$",
+                options: ["$3\frac{7}{15}$", "$2\frac{1}{10}$", "$3\frac{1}{5}$", "$4\frac{2}{15}$"],
+                step: "$2\frac{1}{6} \times 1\frac{3}{5} = \frac{13}{6} \times \frac{8}{5} = \frac{13 \times 4}{3 \times 5} = \frac{52}{15} = 3\frac{7}{15}$"
+            },
+            {
+                q: "$3\frac{1}{8} \times 1\frac{3}{5} = ?$",
+                ans: "$5$",
+                options: ["$5$", "$3\frac{3}{40}$", "$4\frac{1}{2}$", "$6$"],
+                step: "$3\frac{1}{8} \times 1\frac{3}{5} = \frac{25}{8} \times \frac{8}{5} = 5 \times 1 = 5$"
+            },
+            {
+                q: "$2\frac{3}{4} \times 3\frac{1}{3} = ?$",
+                ans: "$9\frac{1}{6}$",
+                options: ["$9\frac{1}{6}$", "$6\frac{1}{4}$", "$8\frac{5}{6}$", "$9\frac{5}{6}$"],
+                step: "$2\frac{3}{4} \times 3\frac{1}{3} = \frac{11}{4} \times \frac{10}{3} = \frac{11 \times 5}{2 \times 3} = \frac{55}{6} = 9\frac{1}{6}$"
+            },
+            {
+                q: "$\frac{9}{14} \times \frac{7}{15} \times \frac{5}{6} = ?$",
+                ans: "$\frac{1}{4}$",
+                options: ["$\frac{1}{4}$", "$\frac{1}{2}$", "$\frac{3}{8}$", "$\frac{1}{6}$"],
+                step: "$\frac{9}{14} \times \frac{7}{15} \times \frac{5}{6} = \frac{3}{2} \times \frac{1}{3} \times \frac{1}{2} = \frac{1}{4}$"
+            },
+            {
+                q: "$\frac{3}{4} \times 4\frac{2}{3} \times \frac{2}{7} = ?$",
+                ans: "$1$",
+                options: ["$1$", "$\frac{3}{7}$", "$2$", "$1\frac{1}{7}$"],
+                step: "$\frac{3}{4} \times 4\frac{2}{3} \times \frac{2}{7} = \frac{3}{4} \times \frac{14}{3} \times \frac{2}{7} = \frac{1}{2} \times 2 \times 1 = 1$"
+            },
+            {
+                q: "$2\frac{2}{5} \times \frac{5}{8} \times \frac{1}{3} = ?$",
+                ans: "$\frac{1}{2}$",
+                options: ["$\frac{1}{2}$", "$\frac{3}{4}$", "$1\frac{1}{2}$", "$\frac{1}{4}$"],
+                step: "$2\frac{2}{5} \times \frac{5}{8} \times \frac{1}{3} = \frac{12}{5} \times \frac{5}{8} \times \frac{1}{3} = \frac{4}{8} = \frac{1}{2}$"
+            },
+            {
+                q: "$10\frac{1}{4} \times \frac{1}{41} \times 4\frac{4}{5} = ?$",
+                ans: "$1\frac{1}{5}$",
+                options: ["$1\frac{1}{5}$", "$4\frac{4}{5}$", "$1\frac{4}{5}$", "$2\frac{1}{5}$"],
+                step: "$10\frac{1}{4} \times \frac{1}{41} \times 4\frac{4}{5} = \frac{41}{4} \times \frac{1}{41} \times \frac{24}{5} = \frac{6}{5} = 1\frac{1}{5}$"
+            }
+        ];
+
+        // --- 12 Magic Zoo Companions ---
+        const companions = [
+            { id: 'c1', name: 'Bubbles the Bunny', rarity: 'R', emoji: '🐰', desc: 'Hops across fractions with speedy mental math.' },
+            { id: 'c2', name: 'Pip the Penguin', rarity: 'R', emoji: '🐧', desc: 'Slides smoothly over mixed numbers.' },
+            { id: 'c3', name: 'Mochi the Shiba', rarity: 'R', emoji: '🐕', desc: 'Loyal study buddy who loves simplifying fractions.' },
+            { id: 'c4', name: 'Clover the Frog', rarity: 'R', emoji: '🐸', desc: 'Leaps straight to the lowest terms!' },
+            { id: 'c5', name: 'Nutty the Squirrel', rarity: 'R', emoji: '🐿️', desc: 'Collects numerators and denominators like acorns.' },
+            { id: 'c6', name: 'Bamboo the Panda', rarity: 'R', emoji: '🐼', desc: 'Calmly cancels common factors with ease.' },
+            { id: 'c7', name: 'Sparky the Fox', rarity: 'SR', emoji: '🦊', desc: 'Clever strategist for multi-step fraction products.' },
+            { id: 'c8', name: 'Luna the Owl', rarity: 'SR', emoji: '🦉', desc: 'Wise night guardian of improper fractions.' },
+            { id: 'c9', name: 'Coral the Dolphin', rarity: 'SR', emoji: '🐬', desc: 'Dives deep into cross-cancellation tricks!' },
+            { id: 'c10', name: 'Leo the Star Lion', rarity: 'SR', emoji: '🦁', desc: 'Roars with pride on every combo streak!' },
+            { id: 'c11', name: 'Aurelia the Unicorn', rarity: 'SSR', emoji: '🦄', desc: 'Legendary rainbow keeper of Fraction Mastery!' },
+            { id: 'c12', name: 'Draco the Celest Dragon', rarity: 'SSR', emoji: '🐲', desc: 'Mythical sovereign of the Magic Math Zoo!' }
+        ];
+
+        // --- Persistent State ---
+        const STORAGE_KEY = 'p5_fraction_gacha_v1';
+        let state = {
+            studentName: 'Math Explorer',
+            coins: 100, // Starter gift so student can try 1 box or earn more!
+            gems: 0,
+            streak: 0,
+            currentQIndex: 0,
+            totalAttempts: 0,
+            correctCount: 0,
+            questionStats: {}, // index -> { attempts, solved }
+            collection: {} // companionId -> count
+        };
+
+        let currentAnswered = false;
+        let currentOptionsOrder = [];
+
+        // --- Audio Engine (Tone.js) ---
+        let synthReady = false;
+        async function ensureAudio() {
+            if (!synthReady && typeof Tone !== 'undefined') {
+                await Tone.start();
+                synthReady = true;
+            }
+        }
+
+        function playSound(type) {
+            ensureAudio().then(() => {
+                if (typeof Tone === 'undefined') return;
+                const synth = new Tone.PolySynth(Tone.Synth).toDestination();
+                const now = Tone.now();
+                if (type === 'correct') {
+                    synth.triggerAttackRelease(["C5", "E5", "G5"], "16n", now);
+                    synth.triggerAttackRelease(["C6"], "8n", now + 0.12);
+                } else if (type === 'wrong') {
+                    synth.triggerAttackRelease(["E3", "Eb3"], "8n", now);
+                } else if (type === 'shake') {
+                    const mem = new Tone.MembraneSynth().toDestination();
+                    mem.triggerAttackRelease("C2", "16n", now);
+                    mem.triggerAttackRelease("G2", "16n", now + 0.15);
+                    mem.triggerAttackRelease("C2", "16n", now + 0.3);
+                } else if (type === 'reveal-R') {
+                    synth.triggerAttackRelease(["C5", "G5"], "8n", now);
+                } else if (type === 'reveal-SR') {
+                    synth.triggerAttackRelease(["D5", "F#5", "A5", "D6"], "8n", now);
+                } else if (type === 'reveal-SSR') {
+                    synth.triggerAttackRelease(["C5", "E5", "G5", "B5"], "16n", now);
+                    synth.triggerAttackRelease(["D5", "F#5", "A5", "D6"], "16n", now + 0.15);
+                    synth.triggerAttackRelease(["E5", "G#5", "B5", "E6"], "4n", now + 0.3);
+                }
+            }).catch(() => {});
+        }
+
+        // --- Text-to-Speech (TTS) Math Verbalizer ---
+        function mathToSpeech(latex) {
+            let text = latex.replace(/\$/g, '');
+            // Mixed numbers: 2rac{2}{7} -> 2 and 2 over 7
+            text = text.replace(/(\d+)\frac\{(\d+)\}\{(\d+)\}/g, '$1 and $2 over $3');
+            // Simple fractions: rac{3}{8} -> 3 over 8
+            text = text.replace(/\frac\{(\d+)\}\{(\d+)\}/g, '$1 over $2');
+            text = text.replace(/\times/g, ' times ');
+            text = text.replace(/=\s*\?/g, ' equals what?');
+            return text;
+        }
+
+        function speakCurrentQuestion() {
+            if (!('speechSynthesis' in window)) return;
+            window.speechSynthesis.cancel();
+            const qObj = questions[state.currentQIndex];
+            const spokenQ = mathToSpeech(qObj.q);
+            const utter = new SpeechSynthesisUtterance(spokenQ);
+            utter.lang = 'en-US';
+            utter.rate = 0.95;
+            window.speechSynthesis.speak(utter);
+        }
+
+        // --- Load & Save LocalStorage ---
+        function loadState() {
+            try {
+                const raw = localStorage.getItem(STORAGE_KEY);
+                if (raw) {
+                    const parsed = JSON.parse(raw);
+                    state = { ...state, ...parsed };
+                }
+            } catch (e) {}
+            document.getElementById('student-name-input').value = state.studentName;
+            updateHeaderUI();
+        }
+
+        function saveState() {
+            try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+            } catch (e) {}
+            updateHeaderUI();
+        }
+
+        function saveStudentName() {
+            const val = document.getElementById('student-name-input').value.trim();
+            state.studentName = val || 'Math Explorer';
+            saveState();
+        }
+
+        function updateHeaderUI() {
+            document.getElementById('coin-display').textContent = state.coins;
+            document.getElementById('gem-display').textContent = state.gems;
+
+            const unlockedCount = Object.keys(state.collection).length;
+            document.getElementById('album-count').textContent = unlockedCount;
+            document.getElementById('album-progress-badge').textContent = `${unlockedCount} / ${companions.length}`;
+
+            const badge = document.getElementById('gacha-badge');
+            if (state.coins >= 100 || state.gems >= 3) {
+                badge.classList.remove('hidden');
+            } else {
+                badge.classList.add('hidden');
+            }
+
+            const streakBadge = document.getElementById('streak-badge');
+            if (state.streak >= 2) {
+                streakBadge.classList.remove('hidden');
+                document.getElementById('streak-count').textContent = state.streak;
+            } else {
+                streakBadge.classList.add('hidden');
+            }
+        }
+
+        // --- Tab Switching ---
+        function switchTab(tab) {
+            ['quiz', 'gacha', 'album'].forEach(t => {
+                document.getElementById(`view-${t}`).classList.add('hidden');
+                const btn = document.getElementById(`tab-${t}`);
+                btn.classList.remove('border-indigo-600', 'text-indigo-700');
+                btn.classList.add('border-transparent', 'text-slate-500');
+            });
+            document.getElementById(`view-${tab}`).classList.remove('hidden');
+            const activeBtn = document.getElementById(`tab-${tab}`);
+            activeBtn.classList.remove('border-transparent', 'text-slate-500');
+            activeBtn.classList.add('border-indigo-600', 'text-indigo-700');
+
+            if (tab === 'album') renderAlbum();
+        }
+
+        // --- Render Question ---
+        function renderMath(el) {
+            if (typeof renderMathInElement === 'function') {
+                renderMathInElement(el, {
+                    delimiters: [
+                        { left: '$$', right: '$$', display: true },
+                        { left: '$', right: '$', display: false }
+                    ],
+                    throwOnError: false
+                });
+            }
+        }
+
+        function shuffleArray(arr) {
+            const copy = [...arr];
+            for (let i = copy.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [copy[i], copy[j]] = [copy[j], copy[i]];
+            }
+            return copy;
+        }
+
+        function renderQuestion() {
+            currentAnswered = false;
+            const idx = state.currentQIndex % questions.length;
+            const qObj = questions[idx];
+
+            document.getElementById('q-number-badge').textContent = `Question ${idx + 1} of ${questions.length}`;
+            document.getElementById('progress-text').textContent = `${idx + 1} / ${questions.length}`;
+            document.getElementById('quiz-progress-bar').style.width = `${((idx + 1) / questions.length) * 100}%`;
+
+            const qDisplay = document.getElementById('question-display');
+            qDisplay.textContent = qObj.q;
+            renderMath(qDisplay);
+
+            const fbBox = document.getElementById('feedback-box');
+            fbBox.classList.add('hidden');
+
+            currentOptionsOrder = shuffleArray(qObj.options);
+            const grid = document.getElementById('options-grid');
+            grid.innerHTML = '';
+
+            const labels = ['A', 'B', 'C', 'D'];
+            currentOptionsOrder.forEach((opt, i) => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn flex items-center gap-3 p-4 rounded-2xl border-2 border-slate-200 bg-white hover:border-indigo-400 hover:bg-indigo-50/50 text-left transition transform active:scale-98 shadow-sm cursor-pointer';
+                btn.innerHTML = `
+                    <span class="w-8 h-8 rounded-full bg-indigo-100 text-indigo-700 font-extrabold flex items-center justify-center shrink-0">${labels[i]}</span>
+                    <span class="opt-text text-xl font-bold text-slate-800">${opt}</span>
+                `;
+                btn.onclick = () => handleAnswer(opt, btn);
+                grid.appendChild(btn);
+            });
+            renderMath(grid);
+        }
+
+        function handleAnswer(selectedOpt, btnEl) {
+            if (currentAnswered) return;
+            currentAnswered = true;
+
+            const idx = state.currentQIndex % questions.length;
+            const qObj = questions[idx];
+            const isCorrect = selectedOpt === qObj.ans;
+
+            if (!state.questionStats[idx]) {
+                state.questionStats[idx] = { attempts: 0, solved: false };
+            }
+            state.questionStats[idx].attempts += 1;
+            state.totalAttempts += 1;
+
+            const allBtns = document.querySelectorAll('.option-btn');
+            allBtns.forEach((b, i) => {
+                b.disabled = true;
+                b.classList.remove('hover:border-indigo-400', 'hover:bg-indigo-50/50');
+                const optVal = currentOptionsOrder[i];
+                if (optVal === qObj.ans) {
+                    b.classList.remove('border-slate-200', 'bg-white');
+                    b.classList.add('border-emerald-500', 'bg-emerald-50');
+                } else if (b === btnEl && !isCorrect) {
+                    b.classList.remove('border-slate-200', 'bg-white');
+                    b.classList.add('border-rose-500', 'bg-rose-50');
+                }
+            });
+
+            const fbBox = document.getElementById('feedback-box');
+            const fbTitle = document.getElementById('feedback-title');
+            const fbReward = document.getElementById('feedback-reward');
+            const solDisplay = document.getElementById('solution-display');
+
+            fbBox.classList.remove('hidden', 'border-emerald-300', 'bg-emerald-50/70', 'border-rose-300', 'bg-rose-50/70');
+
+            if (isCorrect) {
+                playSound('correct');
+                state.correctCount += 1;
+                state.questionStats[idx].solved = true;
+                state.streak += 1;
+
+                const baseCoins = 50;
+                const bonusCoins = state.streak >= 2 ? Math.min(state.streak * 10, 50) : 0;
+                const earnedCoins = baseCoins + bonusCoins;
+                state.coins += earnedCoins;
+
+                let gemMsg = '';
+                if (state.streak > 0 && state.streak % 3 === 0) {
+                    state.gems += 1;
+                    gemMsg = ' + 1 💎 Combo Gem!';
+                }
+
+                fbBox.classList.add('border-emerald-300', 'bg-emerald-50/70');
+                fbTitle.textContent = '🎉 Spot On! Great Job!';
+                fbTitle.className = 'text-lg font-extrabold text-emerald-700 mb-1';
+                fbReward.textContent = `Earned +${earnedCoins} 🪙 Coins${bonusCoins ? ` (includes +${bonusCoins} streak bonus!)` : ''}${gemMsg}`;
+                fbReward.className = 'text-sm font-bold text-emerald-600 mb-3';
+            } else {
+                playSound('wrong');
+                state.streak = 0;
+                fbBox.classList.add('border-rose-300', 'bg-rose-50/70');
+                fbTitle.textContent = '💡 Not quite! Check the steps below:';
+                fbTitle.className = 'text-lg font-extrabold text-rose-700 mb-1';
+                fbReward.textContent = 'Streak reset. Review the solution and try the next one!';
+                fbReward.className = 'text-sm font-bold text-rose-600 mb-3';
+            }
+
+            solDisplay.textContent = qObj.step;
+            renderMath(solDisplay);
+            saveState();
+        }
+
+        function nextQuestion() {
+            state.currentQIndex = (state.currentQIndex + 1) % questions.length;
+            saveState();
+            renderQuestion();
+        }
+
+        // --- Blind Box Gacha Logic ---
+        let isPulling = false;
+        function pullGacha(tier) {
+            if (isPulling) return;
+
+            if (tier === 'standard') {
+                if (state.coins < 100) {
+                    alert('Not enough Coins! Answer more fraction problems in the Practice Arena to earn 100 🪙.');
+                    return;
+                }
+                state.coins -= 100;
+            } else {
+                if (state.gems < 3) {
+                    alert('Not enough Gems! Build a 3-question combo streak to earn 💎 Gems.');
+                    return;
+                }
+                state.gems -= 3;
+            }
+
+            saveState();
+            isPulling = true;
+            playSound('shake');
+
+            const boxEl = document.getElementById('gacha-box-visual');
+            const statusEl = document.getElementById('gacha-status-text');
+            boxEl.classList.remove('animate-float');
+            boxEl.classList.add('animate-shake');
+            statusEl.textContent = '✨ Unsealing the magic box... ✨';
+
+            setTimeout(() => {
+                boxEl.classList.remove('animate-shake');
+                boxEl.classList.add('animate-float');
+                statusEl.textContent = 'Choose a box below to unbox!';
+                isPulling = false;
+
+                // Determine Rarity
+                const roll = Math.random();
+                let rarity = 'R';
+                if (tier === 'standard') {
+                    if (roll < 0.07) rarity = 'SSR';
+                    else if (roll < 0.35) rarity = 'SR';
+                    else rarity = 'R';
+                } else {
+                    if (roll < 0.30) rarity = 'SSR';
+                    else rarity = 'SR';
+                }
+
+                const pool = companions.filter(c => c.rarity === rarity);
+                const chosen = pool[Math.floor(Math.random() * pool.length)];
+
+                const prevCount = state.collection[chosen.id] || 0;
+                state.collection[chosen.id] = prevCount + 1;
+                saveState();
+
+                showRevealModal(chosen, prevCount + 1);
+            }, 950);
+        }
+
+        function showRevealModal(pet, newLevel) {
+            playSound(`reveal-${pet.rarity}`);
+            const modal = document.getElementById('reveal-modal');
+            const card = document.getElementById('reveal-card');
+            const badge = document.getElementById('reveal-rarity-badge');
+            const emoji = document.getElementById('reveal-emoji');
+            const name = document.getElementById('reveal-name');
+            const desc = document.getElementById('reveal-desc');
+            const starStatus = document.getElementById('reveal-star-status');
+
+            card.className = `bg-white rounded-3xl max-w-sm w-full p-6 text-center border-4 relative animate-pop glow-${pet.rarity}`;
+
+            if (pet.rarity === 'SSR') {
+                badge.className = 'inline-block px-4 py-1 rounded-full text-xs font-black tracking-wider uppercase mb-3 bg-amber-100 text-amber-800 border border-amber-400';
+                badge.textContent = '🌈 SSR • MYTHICAL';
+            } else if (pet.rarity === 'SR') {
+                badge.className = 'inline-block px-4 py-1 rounded-full text-xs font-black tracking-wider uppercase mb-3 bg-purple-100 text-purple-800 border border-purple-400';
+                badge.textContent = '✨ SR • SUPER RARE';
+            } else {
+                badge.className = 'inline-block px-4 py-1 rounded-full text-xs font-black tracking-wider uppercase mb-3 bg-sky-100 text-sky-800 border border-sky-300';
+                badge.textContent = '⭐ R • RARE';
+            }
+
+            emoji.textContent = pet.emoji;
+            name.textContent = pet.name;
+            desc.textContent = pet.desc;
+
+            if (newLevel === 1) {
+                starStatus.textContent = '🎉 NEW COMPANION UNLOCKED! (★ Lv.1)';
+            } else {
+                starStatus.textContent = `⬆️ LEVEL UP! Now ★ Lv.${newLevel} (${newLevel}x copies)`;
+            }
+
+            modal.classList.remove('hidden');
+        }
+
+        function closeRevealModal() {
+            document.getElementById('reveal-modal').classList.add('hidden');
+        }
+
+        // --- Render Album ---
+        function renderAlbum() {
+            const grid = document.getElementById('album-grid');
+            grid.innerHTML = '';
+
+            companions.forEach(pet => {
+                const count = state.collection[pet.id] || 0;
+                const unlocked = count > 0;
+                const card = document.createElement('div');
+
+                let borderClass = 'border-slate-200 bg-slate-50 opacity-65';
+                let tagClass = 'bg-slate-200 text-slate-500';
+                if (unlocked) {
+                    if (pet.rarity === 'SSR') {
+                        borderClass = 'border-amber-400 bg-gradient-to-b from-amber-50 to-white shadow-md';
+                        tagClass = 'bg-amber-400 text-amber-950';
+                    } else if (pet.rarity === 'SR') {
+                        borderClass = 'border-purple-400 bg-gradient-to-b from-purple-50 to-white shadow-sm';
+                        tagClass = 'bg-purple-500 text-white';
+                    } else {
+                        borderClass = 'border-sky-300 bg-white shadow-sm';
+                        tagClass = 'bg-sky-500 text-white';
+                    }
+                }
+
+                card.className = `rounded-2xl border-2 p-4 text-center flex flex-col items-center justify-between transition ${borderClass}`;
+                card.innerHTML = `
+                    <div class="w-full flex justify-between items-center text-[11px] font-black">
+                        <span class="px-2 py-0.5 rounded-full ${tagClass}">${pet.rarity}</span>
+                        <span class="text-amber-600">${unlocked ? '★ Lv.' + count : '🔒 Locked'}</span>
+                    </div>
+                    <div class="text-5xl my-3 ${unlocked ? '' : 'grayscale blur-[1px]'}">${unlocked ? pet.emoji : '❓'}</div>
+                    <div>
+                        <h4 class="font-extrabold text-sm text-slate-800">${unlocked ? pet.name : 'Mystery Pet'}</h4>
+                        <p class="text-[11px] text-slate-500 mt-1 line-clamp-2">${unlocked ? pet.desc : 'Open blind boxes to discover!'}</p>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // --- Teacher Dashboard ---
+        function openTeacherModal() {
+            document.getElementById('teacher-modal').classList.remove('hidden');
+            document.getElementById('teacher-login-box').classList.remove('hidden');
+            document.getElementById('teacher-content-box').classList.add('hidden');
+            document.getElementById('teacher-pin-input').value = '';
+            document.getElementById('teacher-pin-error').classList.add('hidden');
+        }
+
+        function closeTeacherModal() {
+            document.getElementById('teacher-modal').classList.add('hidden');
+        }
+
+        function verifyTeacherPin() {
+            const entered = document.getElementById('teacher-pin-input').value;
+            if (entered === TEACHER_PIN) {
+                document.getElementById('teacher-login-box').classList.add('hidden');
+                document.getElementById('teacher-content-box').classList.remove('hidden');
+                populateTeacherDashboard();
+            } else {
+                document.getElementById('teacher-pin-error').classList.remove('hidden');
+            }
+        }
+
+        function populateTeacherDashboard() {
+            document.getElementById('td-student').textContent = state.studentName;
+            document.getElementById('td-attempts').textContent = state.totalAttempts;
+            const acc = state.totalAttempts > 0 ? Math.round((state.correctCount / state.totalAttempts) * 100) : 0;
+            document.getElementById('td-accuracy').textContent = `${acc}%`;
+            const petCount = Object.keys(state.collection).length;
+            document.getElementById('td-assets').textContent = `${state.coins} 🪙 / ${state.gems} 💎 / ${petCount} Pets`;
+
+            const tbody = document.getElementById('td-table-body');
+            tbody.innerHTML = '';
+
+            questions.forEach((qObj, idx) => {
+                const st = state.questionStats[idx] || { attempts: 0, solved: false };
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td class="p-2.5 font-bold text-slate-500">${idx + 1}</td>
+                    <td class="p-2.5 font-semibold">${qObj.q}</td>
+                    <td class="p-2.5 font-bold text-indigo-700">${qObj.ans}</td>
+                    <td class="p-2.5">${st.attempts}</td>
+                    <td class="p-2.5 font-bold ${st.solved ? 'text-emerald-600' : (st.attempts > 0 ? 'text-amber-600' : 'text-slate-400')}">
+                        ${st.solved ? '✅ Mastered' : (st.attempts > 0 ? '⚠️ Needs Practice' : '— Not Attempted')}
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+            renderMath(tbody);
+        }
+
+        function resetAllProgress() {
+            if (confirm('Are you sure you want to reset all student coins, gems, pets, and quiz history?')) {
+                localStorage.removeItem(STORAGE_KEY);
+                location.reload();
+            }
+        }
+
+        // --- Initialize ---
+        window.addEventListener('DOMContentLoaded', () => {
+            loadState();
+            renderQuestion();
+        });
+    </script>
+</body>
+</html>
